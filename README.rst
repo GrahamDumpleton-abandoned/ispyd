@@ -98,7 +98,7 @@ the user that the process runs as.
 An attempt will be made to remove the UNIX listener socket files when the
 process is shutdown. If the process crashes however this will not occur. It
 may also not occur with some versions of embedded WSGI servers such as
-uWSGI which do not support regitration of cleanup callbacks using the
+uWSGI which do not support registration of cleanup callbacks using the
 'atexit' module in Python. In either event, it may be necessary to manually
 remove old stale UNIX listener socket files.
 
@@ -123,7 +123,7 @@ Connections
 
 The system only currently allows one connection to the process at a time.
 Because connections may be received across either UNIX or INET socket types
-and telnet only works for INET sockets, a 'ispy' client program is provided
+and telnet only works for INET sockets, an 'ispy' client program is provided
 for connecting to processes. To run the client run execute::
 
     ispy ispyd.ini
@@ -145,7 +145,7 @@ You can then get a list of the processes that can be connected to by using
 the 'servers' command. This will look at the 'listen' entry to determine
 the address and will present multiple choices where this is possible with
 the configuration. For example, when using UNIX sockets and the application
-is running with multiple process one would see::
+is running with multiple processes one would see::
 
     (ispyd) servers
     1: (1, '/tmp/ispyd-14905.sock')
