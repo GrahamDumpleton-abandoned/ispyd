@@ -115,8 +115,8 @@ Note that when using an INET socket you can't rely on filesystem permissions
 prohibiting who can access the port. The most you can do is restrict which
 interface the port can be accessed. By using 'localhost' you restrict it to
 connections from the same host. You should be extremely careful opening it
-through a FQDN or '0.0.0.0' as that would imply it can be access from outside
-of the system.
+through a FQDN or '0.0.0.0' as that would imply it can be accessed from
+outside of the system.
 
 Connections
 -----------
@@ -137,8 +137,8 @@ set of available commands run 'help'::
     $ ispy ispyd.ini 
     (ispyd) help
 
-    Undocumented commands:
-    ======================
+    Documented commands (type help <topic>):
+    ========================================
     connect  exit  help  servers
 
 You can then get a list of the processes that can be connected to by using
@@ -184,7 +184,7 @@ can provide different features. A number of in built plugins are provided,
 but third party plugins can be created and referenced from the configuration
 file.
 
-To see the list of loaded plugins used the 'plugins' command::
+To see the list of loaded plugins use the 'plugins' command::
 
     (ispyd:14940) plugins
     ['debugger', 'process', 'python', 'wsgi']
@@ -192,19 +192,15 @@ To see the list of loaded plugins used the 'plugins' command::
 To enter a sub shell for a listed plugin use the 'shell' command or '!'
 shortcut::
 
-    (ispyd:14940) shell process
+    (ispyd:14940) shell python
     (process:14940) help
 
     Documented commands (type help <topic>):
     ========================================
-    exit  help  prompt
+    cwd  egid  euid  exit  gid  help  pid  prompt  uid
 
-    Undocumented commands:
-    ======================
-    cwd  egid  environ  euid  gid  pid  uid
-
-    (process:14940) environ
-    {'PATH': '/usr/bin:/bin:/usr/sbin:/sbin', 'HOME': '/Users/graham'}
+    (process:14940) cwd
+    /Users/graham/
 
 Issuing 'exit' at this level will return you back to the top level shell
 for the process. If you wanted to disconnect from the process completely
@@ -235,19 +231,18 @@ embedded interactive Python interpreter directly within the process::
 
     Documented commands (type help <topic>):
     ========================================
-    exit  help  prompt
-
-    Undocumented commands:
-    ======================
-    argv             executable          maxsize     path      threads
-    console          filesystemencoding  maxunicode  platform  version
-    defaultencoding  maxint              modules     prefix  
+    argv             environ     filesystemencoding  maxsize     path      prompt 
+    console          executable  help                maxunicode  platform  threads
+    defaultencoding  exit        maxint              modules     prefix    version
 
     (python:14940) console
     Python 2.6.1 (r261:67515, Jun 24 2010, 21:47:49) 
     [GCC 4.2.1 (Apple Inc. build 5646)] on darwin
     Type "help", "copyright", "credits" or "license" for more information.
     (EmbeddedConsole)
+    >>> import os
+    >>> os.getcwd()
+    '/Users/graham'
     >>> exit()
 
 To exit the embedded interpreter call the 'exit()' or 'quit()' functions.
@@ -276,17 +271,15 @@ using 'pdb'::
 
     Documented commands (type help <topic>):
     ========================================
-    exit  help  prompt
-
-    Undocumented commands:
-    ======================
-    debug  discard  insert  list  print  remove  reset  tracebacks
+    debug    exit  insert  print   remove  tracebacks
+    discard  help  list    prompt  reset 
 
     (debugger:15009) insert __main__:function
+
     (debugger:15009) tracebacks
     {'__main__:function': <traceback object at 0x1013a11b8>}
     (debugger:15009) debug __main__:function
-    > /Users/graham/Projects/wsgi-shell/sample/wsgi.py(15)function()
+    > /Users/graham/wsgi.py(15)function()
     -> raise RuntimeError('xxx')
     (Pdb) dir()
     []
@@ -316,4 +309,89 @@ add the WSGI application middleware wrapper using::
 
 With this in place, the 'requests' command in the 'wsgi' plugin will dump
 out details of any active requests at that time. This will include the WSGI
-environ dictionary and the stack trace for where the code is executing.
+environ dictionary and the stack trace for where the code is executing::
+
+    (wsgi:18630) help
+
+    Documented commands (type help <topic>):
+    ========================================
+    exit  help  prompt  requests
+
+    (wsgi:18630) requests
+    No active transactions.
+
+    (wsgi:18630) requests
+
+    ==== 67 ====
+
+    thread_id = 140735076232384
+    start_time = Mon Apr  9 21:49:54 2012
+    duration = 0.013629 seconds
+
+    CONTENT_LENGTH = ''
+    CONTENT_TYPE = ''
+    HTTP_ACCEPT = '*/*'
+    HTTP_HOST = 'localhost:5000'
+    HTTP_USER_AGENT = 'ApacheBench/2.3'
+    PATH_INFO = '/'
+    QUERY_STRING = ''
+    REMOTE_ADDR = '127.0.0.1'
+    REMOTE_PORT = 50012
+    REQUEST_METHOD = 'GET'
+    SCRIPT_NAME = ''
+    SERVER_NAME = '0.0.0.0'
+    SERVER_PORT = '5000'
+    SERVER_PROTOCOL = 'HTTP/1.0'
+    SERVER_SOFTWARE = 'Werkzeug/0.8.3'
+    werkzeug.request = <Request 'http://localhost:5000/' [GET]>
+    werkzeug.server.shutdown = <function shutdown_server at 0x10476cc80>
+    wsgi.errors = <ispyd.console.OutputWrapper object at 0x1013c68d0>
+    wsgi.input = <socket._fileobject object at 0x10476caa0>
+    wsgi.multiprocess = False
+    wsgi.multithread = False
+    wsgi.run_once = False
+    wsgi.url_scheme = 'http'
+    wsgi.version = (1, 0)
+
+    File: "wsgi.py", line 25, in <module>
+      application.run(host='0.0.0.0', port=port)
+    File: "/Users/graham/lib/python2.6/site-packages/flask/app.py", line 703, in run
+      run_simple(host, port, self, **options)
+    File: "/Users/graham/lib/python2.6/site-packages/werkzeug/serving.py", line 617, in run_simple
+      inner()
+    File: "/Users/graham/lib/python2.6/site-packages/werkzeug/serving.py", line 599, in inner
+      passthrough_errors, ssl_context).serve_forever()
+    File: "/Users/graham/lib/python2.6/site-packages/werkzeug/serving.py", line 358, in serve_forever
+      HTTPServer.serve_forever(self)
+    File: "/System/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/SocketServer.py", line 226, in serve_forever
+      self._handle_request_noblock()
+    File: "/System/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/SocketServer.py", line 281, in _handle_request_noblock
+      self.process_request(request, client_address)
+    File: "/System/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/SocketServer.py", line 307, in process_request
+      self.finish_request(request, client_address)
+    File: "/System/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/SocketServer.py", line 320, in finish_request
+      self.RequestHandlerClass(request, client_address, self)
+    File: "/System/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/SocketServer.py", line 615, in __init__
+      self.handle()
+    File: "/Users/graham/lib/python2.6/site-packages/werkzeug/serving.py", line 182, in handle
+      rv = BaseHTTPRequestHandler.handle(self)
+    File: "/System/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/BaseHTTPServer.py", line 329, in handle
+      self.handle_one_request()
+    File: "/Users/graham/lib/python2.6/site-packages/werkzeug/serving.py", line 217, in handle_one_request
+      return self.run_wsgi()
+    File: "/Users/graham/lib/python2.6/site-packages/werkzeug/serving.py", line 159, in run_wsgi
+      execute(app)
+    File: "/Users/graham/lib/python2.6/site-packages/werkzeug/serving.py", line 146, in execute
+      application_iter = app(environ, start_response)
+    File: "/Users/graham/lib/python2.6/site-packages/flask/app.py", line 1518, in __call__
+      return self.wsgi_app(environ, start_response)
+    File: "build/bdist.macosx-10.6-universal/egg/ispyd/plugins/wsgi.py", line 86, in __call__
+      iterable = self._ispyd_next_object(environ, start_response)
+    File: "/Users/graham/lib/python2.6/site-packages/flask/app.py", line 1504, in wsgi_app
+      response = self.full_dispatch_request()
+    File: "/Users/graham/lib/python2.6/site-packages/flask/app.py", line 1262, in full_dispatch_request
+      rv = self.dispatch_request()
+    File: "/Users/graham/lib/python2.6/site-packages/flask/app.py", line 1248, in dispatch_request
+      return self.view_functions[rule.endpoint](**req.view_args)
+    File: "wsgi.py", line 19, in hello
+      time.sleep(0.05)

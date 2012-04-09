@@ -34,14 +34,29 @@ class ClientShell(cmd.Cmd):
     def emptyline(self):
         pass
 
+    def help_help(self):
+        print >> self.stdout, """help (command)
+        Output list of commands or help details for named command."""
+
     def do_exit(self, line):
+        """exit
+        Exit the client shell."""
+
         return True
 
     def do_servers(self, line):
+        """servers
+        Display a list of the servers which can be connected to."""
+
         for i in range(len(self.__servers)):
             print >> self.stdout, '%s: %s' % (i+1, self.__servers[i])
 
     def do_connect(self, line):
+        """connect [index]
+        Connect to the server from the servers lift with given index. If
+        there is only one server then the index position does not need to
+        be supplied."""
+
         if len(self.__servers) == 0:
             print >> self.stdout, 'No servers to connect to.'
             return

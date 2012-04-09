@@ -146,6 +146,10 @@ class WSGIShell(object):
         return output.getvalue()
 
     def do_requests(self, line):
+        """requests
+        Display details on any web requests currently being processed by
+        the WSGI application."""
+
         output = StringIO.StringIO()
 
         frames = dict(sys._current_frames().items())

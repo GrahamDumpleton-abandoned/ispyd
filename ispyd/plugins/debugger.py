@@ -72,6 +72,11 @@ class DebuggerShell(object):
             return True
 
     def do_insert(self, line):
+        """insert (module:function|module:class.function)
+	Insert a debugger probe around the nominated function to capture
+	traceback for future exception raised in the context of that
+	function."""
+
         if not line:
             print >> self.stdout, 'Invalid probe location.'
             return
@@ -94,6 +99,9 @@ class DebuggerShell(object):
             return
 
     def do_remove(self, line):
+        """remove (module:function|module:class.function)
+        Remove the debugger probe around the nominated function."""
+
         if not line:
             print >> self.stdout, 'Invalid probe location.'
             return
@@ -117,27 +125,51 @@ class DebuggerShell(object):
             del _probes[line]
 
     def do_list(self, line):
+        """list
+        Display the list of functions which debugger probes have currently
+        been added around."""
+
         print >> self.stdout, sorted(_probes.keys())
 
     def do_reset(self, line):
+        """reset
+        Remove all debugger probes and clear out any tracebacks which have
+        been captured from past exceptions."""
+
         global _tracebacks
         _tracebacks = []
         for name in _probes.keys():
             self.do_remove(name)
 
     def do_tracebacks(self, line):
+        """traceback
+        Display a list of the tracebacks that have been captured from past
+        exceptions."""
+
         print >> self.stdout, _tracebacks
 
     def do_print(self, line):
+        """print (module:function|module:class.function)
+        Print the stack trace for the traceback captured for the nominated
+        function."""
+
         if not line in _tracebacks:
             return
         traceback.print_tb(_tracebacks[line], file=self.stdout)
 
     def do_discard(self, line):
+        """discard (module:function|module:class.function)
+        Discards the current traceback currently held for the nominated
+        function."""
+
         if line in _tracebacks:
             del _tracebacks[line]
 
     def do_debug(self, line):
+        """debug (module:function|module:class.function)
+        Run 'pdb' in post mortem mode for the traceback captured against
+        the nominated function."""
+
         if not line in _tracebacks:
             return
 
