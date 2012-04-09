@@ -53,7 +53,6 @@ class ProxyShell(cmd.Cmd):
 
     def do_prompt(self, flag):
         """prompt (on|off)
-
 	Enable or disable the shell prompt."""
 
         if flag == 'on':
