@@ -60,7 +60,7 @@ before 1.0 is released.
 Integration
 -----------
 
-To integrate into your Python application you need to add the lines:
+To integrate into your Python application you need to add the lines::
 
     from ispyd.manager import ShellManager
 
@@ -72,7 +72,7 @@ exists in the same directory as the Python application/script file. If this
 is not the case, change how 'config_file' is calculated or set it to an
 explicit file system path.
 
-The 'ispyd.ini' configuration file at the minimum needs to contain:
+The 'ispyd.ini' configuration file at the minimum needs to contain::
 
     [ispyd]
     listen = /tmp/ispyd-%(pid)s.sock
@@ -84,7 +84,7 @@ for use in applications which create multiple processes such as Python web
 applications running under a multiprocess WSGI server.
 
 If the application only runs a single process, you can instead use a fixed
-path such as:
+path such as::
 
     [ispyd]
     listen = /tmp/ispyd.sock
@@ -104,7 +104,7 @@ remove old stale UNIX listener socket files.
 
 If running a single application process, instead of using a UNIX listener
 socket an INET socket can instead be used. This would be done with the
-configuration:
+configuration::
 
     [ispyd]
     listen = localhost:12345
@@ -152,7 +152,7 @@ is running with multiple process one would see::
     2: (1, '/tmp/ispyd-14906.sock')
     3: (1, '/tmp/ispyd-14907.sock')
 
-If using INET sockets, you would instead see something like:
+If using INET sockets, you would instead see something like::
 
     (ispyd) servers
     1: (2, ('localhost', 12345))
@@ -294,7 +294,7 @@ using 'pdb'::
     'wsgi.py'
 
 By default, use of the 'debugger' plugin is disabled. To enable it you need
-to add to the configuration file:
+to add to the configuration file::
 
     [debugger]
     enabled = true
