@@ -22,6 +22,12 @@ point and you likely would not want to run it on a production system. The
 anticipated feature set for builtin plugins is also by no means complete at
 this point.
 
+License
+-------
+
+The source code in this package is made available under the terms of the
+Apache License, Version 2.0. See the 'LICENSE' file for more information.
+
 Installation
 ------------
 
