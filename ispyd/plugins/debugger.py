@@ -68,7 +68,7 @@ class DebuggerShell(object):
             enabled = value.lower() in ('1', 'on', 'yes', 'true')
 
         if not enabled:
-            print >> self.stdout, 'Sorry, the Python console is disabled.'
+            print >> self.stdout, 'Sorry, the debugger plugin is disabled.'
             return True
 
     def do_insert(self, line):
