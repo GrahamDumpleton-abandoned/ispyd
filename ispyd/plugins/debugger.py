@@ -61,6 +61,16 @@ class DebuggerShell(object):
     def activate(self, config_object):
         self.__config_object = config_object
 
+        enabled = False
+
+        if self.__config_object.has_option('debugger', 'enabled'):
+            value = self.__config_object.get('debugger', 'enabled')
+            enabled = value.lower() in ('1', 'on', 'yes', 'true')
+
+        if not enabled:
+            print >> self.stdout, 'Sorry, the Python console is disabled.'
+            return True
+
     def do_insert(self, line):
         if not line:
             print >> self.stdout, 'Invalid probe location.'
