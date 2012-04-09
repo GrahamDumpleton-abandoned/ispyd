@@ -1,0 +1,7 @@
+build
+dist
+sample/.Python
+sample/bin
+sample/lib
+sample/include
+ispyd.egg-info

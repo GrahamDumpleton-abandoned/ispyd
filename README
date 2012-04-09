@@ -1,0 +1,3 @@
+A process shell providing introspection services for a process. Primarily
+intended for investigating running WSGI application processes, but has
+general utility as well.
