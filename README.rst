@@ -198,7 +198,7 @@ To see the list of loaded plugins use the 'plugins' command::
 To enter a sub shell for a listed plugin use the 'shell' command or '!'
 shortcut::
 
-    (ispyd:14940) shell python
+    (ispyd:14940) shell process
     (process:14940) help
 
     Documented commands (type help <topic>):
@@ -206,7 +206,7 @@ shortcut::
     cwd  egid  euid  exit  gid  help  pid  prompt  uid
 
     (process:14940) cwd
-    /Users/graham/
+    /Users/graham
 
 Issuing 'exit' at this level will return you back to the top level shell
 for the process. If you wanted to disconnect from the process completely
