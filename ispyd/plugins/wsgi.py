@@ -44,7 +44,6 @@ class WSGITransaction(object):
 
     def __exit__(self, exc, value, tb):
         _exceptions.append(tb)
-        print 'TRACEBACK', exc, value, tb
         self.running = False
         self.finish = time.time()
         if not self.deleted:
