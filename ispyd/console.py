@@ -65,7 +65,7 @@ class OutputWrapper(ObjectWrapper):
         except:
             return self._ispyd_next_object.write(data)
 
-    def write(self, data):
+    def writelines(self, data):
         try:
             shell = _consoles.active
             return shell.stdout.writelines(data)
