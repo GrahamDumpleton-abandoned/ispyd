@@ -83,7 +83,6 @@ class WSGIApplicationWrapper(ObjectWrapper):
 
         try:
             iterable = self._ispyd_next_object(environ, start_response)
-            raise RuntimeError('xxx')
         except:
             transaction.__exit__(*sys.exc_info())
             raise
