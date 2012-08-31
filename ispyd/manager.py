@@ -27,7 +27,7 @@ class ShellManager(object):
             self.__socket_server = (host, port)
 
         self.__thread = threading.Thread(target=self.__thread_run,
-            name='Pippi-Shell-Manager')
+            name='ISpyd-Shell-Manager')
 
         self.__thread.setDaemon(True)
         self.__thread.start()
