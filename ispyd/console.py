@@ -58,6 +58,13 @@ setquit()
 
 class OutputWrapper(ObjectWrapper):
 
+    def flush(self):
+        try:
+            shell = _consoles.active
+            return shell.stdout.flush()
+        except:
+            return self._ispyd_next_object.flush()
+
     def write(self, data):
         try:
             shell = _consoles.active
