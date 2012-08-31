@@ -133,6 +133,8 @@ class WSGIShell(object):
 
         print >> output
 
+        text = None
+
         if transaction.thread_id in frames:
             text = self.format_traceback(frames[transaction.thread_id])
 
