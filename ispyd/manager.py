@@ -68,8 +68,8 @@ class ShellManager(object):
             try:
                 shell.cmdloop()
             except:
-                print >> self.stdout, 'Exception in shell "%s".' % shell.name
-                traceback.print_exception(*sys.exc_info(), file=self.stdout)
+                print >> shell.stdout, 'Exception in shell "%s".' % shell.name
+                traceback.print_exception(*sys.exc_info(), file=shell.stdout)
 
             shell.stdin = None
             shell.stdout = None
