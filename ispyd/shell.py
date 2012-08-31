@@ -6,6 +6,7 @@ import traceback
 _builtin_plugins = [
   'ispyd.plugins.debugger:DebuggerShell',
   'ispyd.plugins.process:ProcessShell',
+  'ispyd.plugins.profiler:ProfilerShell',
   'ispyd.plugins.python:PythonShell',
   'ispyd.plugins.wsgi:WSGIShell',
 ]
