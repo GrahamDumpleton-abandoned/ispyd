@@ -5,6 +5,7 @@ import os
 import socket
 import threading
 import traceback
+import sys
 
 from ispyd.shell import RootShell
 
